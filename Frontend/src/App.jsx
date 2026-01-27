@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import AboutUs from './pages/AboutUs';
 
 const App = () => {
   const location = useLocation();
@@ -29,8 +30,9 @@ const App = () => {
         <Route path="/events/:id" element={<EventDetails />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/favourite" element={<Favourite />} />
-        <Route path="/community" element={<Community />} />
+        <Route path="/communities" element={<Community />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/About-Us" element={<AboutUs />} />
         <Route path="*" element={<div className="text-center mt-24">404 | Page Not Found</div>} />
       </Routes>
 

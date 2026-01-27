@@ -3,6 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu, Search, TicketPlus, X } from "lucide-react";
 import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
 
+const navLinkClass = `
+  relative
+  text-black md:text-black
+  hover:text-orange-500
+  transition
+  after:absolute after:left-0 after:-bottom-1
+  after:h-[2px] after:w-0 after:bg-orange-500
+  after:transition-all after:duration-300
+  hover:after:w-full
+`;
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useUser();
@@ -11,21 +22,21 @@ const Navbar = () => {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
-
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [isOpen]);
 
   const handleNavClick = () => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setIsOpen(false);
   };
 
   return (
     <div className="fixed top-0 left-0 z-50 w-full flex items-center justify-between px-6 md:px-16 lg:px-36 py-5">
+      
       {/* LOGO */}
-      <Link to="/" className="max-md:flex-1">
+      <Link to="/" onClick={handleNavClick} className="max-md:flex-1">
         <div className="flex items-center gap-1">
           <span className="text-3xl font-bold tracking-tight text-black">
             Local
@@ -38,63 +49,53 @@ const Navbar = () => {
 
       {/* NAVIGATION */}
       <div
-  className={`
-    fixed md:static inset-0 z-50
-    flex flex-col md:flex-row
-    items-center justify-center md:justify-between
-    gap-8
-    px-6 md:px-10 lg:px-14
-    py-4 md:py-0 lg:py-4
-    text-white font-medium
-    bg-black/90 backdrop-blur-xl
-    md:bg-white/10 md:backdrop-blur-md
-    md:border md:border-white/20 md:rounded-full
-    transform transition-transform duration-300
-    ${isOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"}
-  `}
->
-  <X
-    className="md:hidden absolute top-6 right-6 w-6 h-6 cursor-pointer text-white"
-    onClick={() => setIsOpen(false)}
-  />
+        className={`
+          fixed md:static inset-0 z-50
+          flex flex-col md:flex-row
+          items-center justify-center md:justify-between
+          gap-8
+          px-6 md:px-10 lg:px-14
+          py-4 md:py-0 lg:py-4
+          font-medium
+          text-white md:text-black
+          bg-black/30 backdrop-blur-xl
+          md:bg-orange-400/50 md:backdrop-blur-md
+          md:border md:border-white/20 md:rounded-full
+          transform transition-transform duration-300
+          ${isOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"}
+        `}
+      >
+        {/* CLOSE ICON (Mobile) */}
+        <X
+          className="md:hidden absolute top-6 right-6 w-6 h-6 cursor-pointer text-black"
+          onClick={() => setIsOpen(false)}
+        />
 
-  <Link
-    to="/"
-    onClick={handleNavClick}
-    className="hover:text-orange-500 transition"
-  >
-    Home
-  </Link>
+        <Link to="/" onClick={handleNavClick} className={navLinkClass}>
+          Home
+        </Link>
 
-  <Link
-    to="/events"
-    onClick={handleNavClick}
-    className="hover:text-orange-500 transition"
-  >
-    Events
-  </Link>
+        <Link to="/events" onClick={handleNavClick} className={navLinkClass}>
+          Events
+        </Link>
 
-  <Link
-    to="/communities"
-    onClick={handleNavClick}
-    className="hover:text-orange-500 transition"
-  >
-    Communities
-  </Link>
+        <Link to="/communities" onClick={handleNavClick} className={navLinkClass}>
+          Communities
+        </Link>
 
-  <Link
-    to="/booking"
-    onClick={handleNavClick}
-    className="hover:text-orange-500 transition"
-  >
-    Booking
-  </Link>
-</div>
+        <Link to="/booking" onClick={handleNavClick} className={navLinkClass}>
+          Booking
+        </Link>
 
+        <Link to="/About-Us" onClick={handleNavClick} className={navLinkClass}>
+          AboutUs
+        </Link>
+      
+      </div>
 
       {/* RIGHT SECTION */}
       <div className="flex items-center gap-8">
-        <Search className="max-md:hidden w-6 h-6 cursor-pointer text-black" />
+        <Search className="max-md:hidden w-6 h-6 cursor-pointer text-black hover:text-orange-500 transition" />
 
         {!user ? (
           <button
@@ -118,7 +119,7 @@ const Navbar = () => {
 
       {/* MOBILE MENU BUTTON */}
       <Menu
-        className="md:hidden ml-4 w-8 h-8 cursor-pointer text-white"
+        className="md:hidden ml-4 w-8 h-8 cursor-pointer text-black"
         onClick={() => setIsOpen(true)}
       />
     </div>
