@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,10 @@ const Signup = () => {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value })
 
+  const navigate = useNavigate()
+
   return (
+
     <section className="min-h-screen flex items-center justify-center bg-orange-50 px-4">
       <div className="w-full max-w-md bg-white border border-black/10 rounded-xl p-6 shadow-sm">
 
@@ -94,7 +98,7 @@ const Signup = () => {
         {/* FOOTER */}
         <p className="mt-6 text-center text-sm text-black/70">
           Already have an account?{" "}
-          <span className="text-orange-500 font-medium cursor-pointer hover:underline">
+          <span className="text-orange-500 font-medium cursor-pointer hover:underline" onClick={() => navigate('/login')}>
             Login
           </span>
         </p>

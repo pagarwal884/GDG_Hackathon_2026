@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const SignupCommunity = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ const SignupCommunity = () => {
     const { name, value, files } = e.target
     setFormData({ ...formData, [name]: files ? files[0] : value })
   }
+
+  const navigate = useNavigate()
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-orange-50 px-4">
@@ -102,8 +105,12 @@ const SignupCommunity = () => {
           </button>
         </form>
 
+         {/* FOOTER */}
         <p className="mt-6 text-center text-sm text-black/70">
-          You can edit community details later from settings
+          Already have an account?{" "}
+          <span className="text-orange-500 font-medium cursor-pointer hover:underline" onClick={() => navigate('/login')}>
+            Login
+          </span>
         </p>
       </div>
     </section>

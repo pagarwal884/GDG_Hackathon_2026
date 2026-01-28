@@ -22,7 +22,7 @@ const App = () => {
 
   const isAdminRoute = location.pathname.startsWith("/admin")
   const isAuthPage =
-    location.pathname === "/login" || location.pathname === "/signin"
+    location.pathname === "/login" || location.pathname === "/signin" || location.pathname ==="/signincommunity"
 
   return (
     <>
