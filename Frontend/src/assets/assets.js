@@ -1,13 +1,18 @@
 import bg from './Bg.png'
 
 export const assets = {
-    bg
+  bg,
 }
 
 // ---------------------------------------------
 // CATEGORIES (for filtering & discovery)
 // ---------------------------------------------
 export const categories = [
+  {
+    id: "following",
+    name: "Following",
+    icon: "⭐", // shows communities the user follows
+  },
   {
     id: "art",
     name: "Art & Creativity",
@@ -52,6 +57,7 @@ export const dummyCommunities = [
     location: "Fateh Sagar, Udaipur",
     membersCount: 320,
     rating: 4.7,
+    isFollowing: true,
   },
   {
     _id: "comm_002",
@@ -66,6 +72,7 @@ export const dummyCommunities = [
     location: "Shobhagpura, Udaipur",
     membersCount: 210,
     rating: 4.9,
+    isFollowing: false,
   },
   {
     _id: "comm_003",
@@ -80,6 +87,7 @@ export const dummyCommunities = [
     location: "Old City, Udaipur",
     membersCount: 180,
     rating: 4.6,
+    isFollowing: true,
   },
   {
     _id: "comm_004",
@@ -94,12 +102,132 @@ export const dummyCommunities = [
     location: "Neemach Mata, Udaipur",
     membersCount: 260,
     rating: 4.8,
+    isFollowing: false,
+  },
+  {
+    _id: "comm_005",
+    name: "Urban Sketchers Udaipur",
+    description:
+      "Weekly on-location sketch walks capturing the architecture, streets, and daily life of Udaipur.",
+    category: "Art & Creativity",
+    coverImage:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+    logo:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
+    location: "City Palace Area",
+    membersCount: 145,
+    rating: 4.5,
+    isFollowing: false,
+  },
+  {
+    _id: "comm_006",
+    name: "Calm Minds Club",
+    description:
+      "Safe space for stress relief, journaling circles, and guided emotional wellness sessions.",
+    category: "Mental Wellness",
+    coverImage:
+      "https://images.unsplash.com/photo-1499209974431-9dddcece7f88",
+    logo:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1",
+    location: "University Road",
+    membersCount: 190,
+    rating: 4.8,
+    isFollowing: true,
+  },
+  {
+    _id: "comm_007",
+    name: "Sunrise Yoga Tribe",
+    description:
+      "Early-morning yoga and pranayama sessions focused on flexibility, strength, and breath.",
+    category: "Yoga & Meditation",
+    coverImage:
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
+    logo:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+    location: "Sukhadia Circle",
+    membersCount: 275,
+    rating: 4.9,
+    isFollowing: false,
+  },
+  {
+    _id: "comm_008",
+    name: "Indie Film Circle",
+    description:
+      "Monthly indie film screenings followed by discussions with filmmakers and critics.",
+    category: "Art & Creativity",
+    coverImage:
+      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba",
+    logo:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde",
+    location: "Chetak Circle",
+    membersCount: 120,
+    rating: 4.4,
+    isFollowing: false,
+  },
+  {
+    _id: "comm_009",
+    name: "Weekend Hikers Udaipur",
+    description:
+      "Short hikes, nature walks, and outdoor meetups around Udaipur and nearby hills.",
+    category: "Community Meetups",
+    coverImage:
+      "https://images.unsplash.com/photo-1500534314209-a26db0f5d13c",
+    logo:
+      "https://images.unsplash.com/photo-1544725176-7c40e5a2c9f9",
+    location: "Outskirts of Udaipur",
+    membersCount: 340,
+    rating: 4.7,
+    isFollowing: true,
+  },
+  {
+    _id: "comm_010",
+    name: "Raahgiri Music Circle",
+    description:
+      "Street-style music sessions, open mics, and collaborative performances.",
+    category: "Music & Performance",
+    coverImage:
+      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4",
+    logo:
+      "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c",
+    location: "Town Hall Road",
+    membersCount: 205,
+    rating: 4.6,
+    isFollowing: false,
+  },
+  {
+    _id: "comm_011",
+    name: "Creative Writers Hub",
+    description:
+      "Storytelling, poetry slams, and feedback-driven writing workshops.",
+    category: "Art & Creativity",
+    coverImage:
+      "https://images.unsplash.com/photo-1519682337058-a94d519337bc",
+    logo:
+      "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
+    location: "Ashok Nagar",
+    membersCount: 98,
+    rating: 4.3,
+    isFollowing: false,
+  },
+  {
+    _id: "comm_012",
+    name: "Evening Meditation Circle",
+    description:
+      "Silent meditation and guided relaxation sessions to unwind after work.",
+    category: "Yoga & Meditation",
+    coverImage:
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773",
+    logo:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+    location: "Saheliyon Ki Bari",
+    membersCount: 160,
+    rating: 4.8,
+    isFollowing: true,
   },
 ]
 
-
 // ---------------------------------------------
-// SESSIONS / EVENTS DATA
+// SESSIONS / EVENTS DATA (PUBLICLY VIEWABLE)
 // ---------------------------------------------
 export const dummySessions = [
   {
@@ -115,6 +243,7 @@ export const dummySessions = [
     registeredCount: 28,
     description:
       "Open-air sketching session with fellow artists. Bring your own materials.",
+    isPublic: true, // anyone can see this session
   },
   {
     _id: "sess_102",
@@ -129,6 +258,7 @@ export const dummySessions = [
     registeredCount: 19,
     description:
       "A guided mindfulness and stress-management session for students and young professionals.",
+    isPublic: true,
   },
   {
     _id: "sess_103",
@@ -143,6 +273,7 @@ export const dummySessions = [
     registeredCount: 41,
     description:
       "An unplugged jam session featuring local indie musicians and open mic slots.",
+    isPublic: true,
   },
   {
     _id: "sess_104",
@@ -157,5 +288,6 @@ export const dummySessions = [
     registeredCount: 22,
     description:
       "Begin your day with a calming yoga flow and guided meditation.",
+    isPublic: true,
   },
 ]

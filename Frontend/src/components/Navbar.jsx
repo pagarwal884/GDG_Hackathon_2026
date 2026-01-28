@@ -31,6 +31,7 @@ const Navbar = () => {
     const loginType = localStorage.getItem("loginType");
     if (isLoggedIn === "true" && loginType === "user") {
       // Example user object, replace with real data if available
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setUser({
         name: "John Doe",
         avatar: "/default-avatar.png"
