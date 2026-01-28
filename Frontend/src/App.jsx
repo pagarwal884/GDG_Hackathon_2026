@@ -1,6 +1,7 @@
 import React from "react"
 import { Route, Routes, useLocation } from "react-router-dom"
 import { Toaster } from "react-hot-toast"
+import { AuthProvider } from "./AuthContext"
 
 import Home from "./pages/Home"
 import Event from "./pages/Event"
@@ -25,7 +26,7 @@ const App = () => {
     location.pathname === "/login" || location.pathname === "/signin" || location.pathname ==="/signincommunity"
 
   return (
-    <>
+    <AuthProvider>
       <Toaster position="top-center" />
 
       {/* NAVBAR */}
@@ -57,7 +58,7 @@ const App = () => {
 
       {/* FOOTER */}
       {!isAdminRoute && !isAuthPage && <Footer />}
-    </>
+    </AuthProvider>
   )
 }
 

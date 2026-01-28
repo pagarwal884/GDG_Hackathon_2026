@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, Search, X } from "lucide-react";
+import { useAuth } from "../AuthContext";
 
 const navLinkClass = `
   relative
@@ -15,7 +16,7 @@ const navLinkClass = `
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null); // ← logged-in user state
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,20 +25,6 @@ const Navbar = () => {
       document.body.style.overflow = "auto";
     };
   }, [isOpen]);
-
-  // ✅ Check localStorage for login
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    const loginType = localStorage.getItem("loginType");
-    if (isLoggedIn === "true" && loginType === "user") {
-      // Example user object, replace with real data if available
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setUser({
-        name: "John Doe",
-        avatar: "/default-avatar.png"
-      });
-    }
-  }, []);
 
   const handleNavClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

@@ -1,24 +1,55 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Eye, EyeOff } from "lucide-react"
+import { useAuth } from "../AuthContext"
+import toast from "react-hot-toast"
 
 const Login = () => {
   const navigate = useNavigate()
+  const { login } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [loginType, setLoginType] = useState("user") // "user" | "community"
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  })
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
 
-    // ✅ Mock login success
-    localStorage.setItem("isLoggedIn", "true")
-    localStorage.setItem("loginType", loginType)
-
-    // Redirect based on type
-    if (loginType === "user") {
-      navigate("/", { replace: true })
-    } else {
-      navigate("/communities", { replace: true })
+    try {
+      await login(formData.email, formData.password, loginType)
+      
+      toast.success("Login successful!")
+      
+      // Redirect based on type
+      if (loginType === "user") {
+        navigate("/", { replace: true })
+      } else {
+        navigate("/communities", { replace: true })
+      }
+    } catch (error) {
+      console.error("Login error:", error)
+      
+      if (error.message.includes("No")) {
+        toast.error(error.message)
+      } else if (error.code === "auth/invalid-credential") {
+        toast.error("Invalid email or password")
+      } else if (error.code === "auth/user-not-found") {
+        toast.error("No account found with this email")
+      } else if (error.code === "auth/wrong-password") {
+        toast.error("Incorrect password")
+      } else {
+        toast.error("Login failed. Please try again.")
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -41,6 +72,7 @@ const Login = () => {
         {/* TOGGLE */}
         <div className="flex mb-6 rounded-lg border border-black/10 overflow-hidden">
           <button
+            type="button"
             onClick={() => setLoginType("user")}
             className={`w-1/2 py-2 text-sm font-medium transition
               ${loginType === "user"
@@ -51,6 +83,7 @@ const Login = () => {
           </button>
 
           <button
+            type="button"
             onClick={() => setLoginType("community")}
             className={`w-1/2 py-2 text-sm font-medium transition
               ${loginType === "community"
@@ -70,6 +103,9 @@ const Login = () => {
             </label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               required
               className="mt-1 w-full px-4 py-2.5 rounded-md border border-black/10
               focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -82,6 +118,9 @@ const Login = () => {
             <div className="relative mt-1">
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 required
                 className="w-full px-4 py-2.5 rounded-md border border-black/10
                 focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -99,10 +138,12 @@ const Login = () => {
           {/* SUBMIT */}
           <button
             type="submit"
+            disabled={loading}
             className="w-full mt-2 px-4 py-2.5 rounded-md
-            bg-orange-500 text-white font-medium hover:bg-orange-600 transition"
+            bg-orange-500 text-white font-medium hover:bg-orange-600 transition
+            disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loginType === "user" ? "Login" : "Continue as Community"}
+            {loading ? "Logging in..." : loginType === "user" ? "Login" : "Continue as Community"}
           </button>
         </form>
 
@@ -110,7 +151,7 @@ const Login = () => {
         <div className="mt-6 text-center text-sm text-black/70">
           {loginType === "user" ? (
             <>
-              Don’t have an account?{" "}
+              Don't have an account?{" "}
               <button
                 onClick={() => navigate("/signin")}
                 className="text-orange-500 hover:underline font-medium"
@@ -120,7 +161,7 @@ const Login = () => {
             </>
           ) : (
             <>
-              Haven’t registered your community?{" "}
+              Haven't registered your community?{" "}
               <button
                 onClick={() => navigate("/signincommunity")}
                 className="text-orange-500 hover:underline font-medium"
