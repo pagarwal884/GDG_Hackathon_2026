@@ -119,13 +119,21 @@ const AboutUs = () => {
           </p>
         </div>
 
-        {/* FOOTER NOTE — UNCHANGED */}
         <div className="max-w-3xl mx-auto text-center pt-10">
-          <p className="text-lg text-gray-700 italic leading-relaxed">
-            "Local बैठक is built with the belief that meaningful conversations and
-            connections start locally — and grow from there. Every great community
-            begins with a simple 'hello'."
-          </p>
+          <div className="relative inline-block">
+            <div className="absolute inset-0 bg-linear-to-r from-orange-500/20 to-amber-500/20 
+                          blur-xl rounded-full transform scale-150" />
+            <p className="relative text-lg text-gray-700 italic leading-relaxed">
+              "Local बैठक is built with the belief that meaningful conversations and
+              connections start locally — and grow from there. Every great community
+              begins with a simple 'hello'."
+            </p>
+          </div>
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <div className="w-24 h-px bg-linear-to-r from-transparent via-gray-300 to-transparent" />
+            <span className="text-sm text-gray-500 font-medium">Join the movement</span>
+            <div className="w-24 h-px bg-linear-to-r from-transparent via-gray-300 to-transparent" />
+          </div>
         </div>
 
       </div>
