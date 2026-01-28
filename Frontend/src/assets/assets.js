@@ -291,3 +291,20 @@ export const dummySessions = [
     isPublic: true,
   },
 ]
+
+export const dummyBookings = [
+  {
+    _id: "book_001",
+    sessionId: "sess_101",
+    communityId: "comm_001",
+    bookingDate: "2025-07-20",
+    status: "Confirmed",
+  },
+  {
+    _id: "book_002",
+    sessionId: "sess_103",
+    communityId: "comm_003",
+    bookingDate: "2025-07-22",
+    status: "Confirmed",
+  },
+]
