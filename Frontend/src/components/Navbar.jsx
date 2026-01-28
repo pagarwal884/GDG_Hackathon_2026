@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, Search, TicketPlus, X } from "lucide-react";
-import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
 
 const navLinkClass = `
   relative
@@ -16,8 +15,6 @@ const navLinkClass = `
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useUser();
-  const { openSignIn } = useClerk();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,31 +87,18 @@ const Navbar = () => {
         <Link to="/About-Us" onClick={handleNavClick} className={navLinkClass}>
           AboutUs
         </Link>
-      
       </div>
 
       {/* RIGHT SECTION */}
       <div className="flex items-center gap-8">
         <Search className="max-md:hidden w-6 h-6 cursor-pointer text-black hover:text-orange-500 transition" />
 
-        {!user ? (
-          <button
-            onClick={openSignIn}
-            className="px-4 py-1 sm:px-7 sm:py-2 bg-orange-600 hover:bg-orange-700 transition rounded-full font-medium text-white"
-          >
-            Login
-          </button>
-        ) : (
-          <UserButton>
-            <UserButton.MenuItems>
-              <UserButton.Action
-                label="My Bookings"
-                labelIcon={<TicketPlus width={15} />}
-                onClick={() => navigate("/mybookings")}
-              />
-            </UserButton.MenuItems>
-          </UserButton>
-        )}
+        <button
+          onClick={() => navigate("/login")}
+          className="px-4 py-1 sm:px-7 sm:py-2 bg-orange-600 hover:bg-orange-700 transition rounded-full font-medium text-white"
+        >
+          Login
+        </button>
       </div>
 
       {/* MOBILE MENU BUTTON */}

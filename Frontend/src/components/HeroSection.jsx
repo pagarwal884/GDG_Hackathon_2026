@@ -1,22 +1,8 @@
 import React from "react";
-import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
-import { useUser, useClerk } from "@clerk/clerk-react";
 
 const HeroSection = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
-  const { openSignIn } = useClerk();
-
-  const handleProtectedNavigation = (path) => {
-    if (!user) {
-      openSignIn({
-        redirectUrl: path, // after login, go here
-      });
-    } else {
-      navigate(path);
-    }
-  };
 
   return (
     <div
@@ -41,14 +27,14 @@ const HeroSection = () => {
 
           <div className="mt-8 flex gap-4">
             <button
-              onClick={() => handleProtectedNavigation("/events")}
+              onClick={() => navigate("/events")}
               className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-semibold transition cursor-pointer"
             >
               Explore Events
             </button>
 
             <button
-              onClick={() => handleProtectedNavigation("/About-Us")}
+              onClick={() => navigate("/About-Us")}
               className="px-6 py-3 border border-white/30 text-white rounded-full font-semibold hover:bg-white/10 transition cursor-pointer"
             >
               Learn More

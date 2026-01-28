@@ -36,7 +36,7 @@ const CommunitiesCard = ({ community }) => {
             isFollowing
               ? "bg-gray-100 text-black/70 hover:bg-gray-200"
               : "bg-orange-500 text-white hover:bg-orange-600"
-          }`}
+          } cursor-pointer`}
       >
         {isFollowing ? "Following" : "Follow"}
       </button>
