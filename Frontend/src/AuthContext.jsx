@@ -23,35 +23,63 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [userType, setUserType] = useState(null) // "user" or "community"
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+ useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    try {
       if (firebaseUser) {
-        // Fetch user type from Firestore
-        const userDoc = await getDoc(doc(db, "users", firebaseUser.uid))
-        const communityDoc = await getDoc(doc(db, "communities", firebaseUser.uid))
+        const userRef = doc(db, "users", firebaseUser.uid)
+        const communityRef = doc(db, "communities", firebaseUser.uid)
+
+        const [userDoc, communityDoc] = await Promise.all([
+          getDoc(userRef),
+          getDoc(communityRef),
+        ])
 
         if (userDoc.exists()) {
-          setUser({ ...firebaseUser, ...userDoc.data() })
+          setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            ...userDoc.data(),
+          })
           setUserType("user")
           localStorage.setItem("isLoggedIn", "true")
           localStorage.setItem("loginType", "user")
+
         } else if (communityDoc.exists()) {
-          setUser({ ...firebaseUser, ...communityDoc.data() })
+          setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            ...communityDoc.data(),
+          })
           setUserType("community")
           localStorage.setItem("isLoggedIn", "true")
           localStorage.setItem("loginType", "community")
+
+        } else {
+          // Auth user exists but no Firestore record → force logout
+          await signOut(auth)
+          setUser(null)
+          setUserType(null)
+          localStorage.removeItem("isLoggedIn")
+          localStorage.removeItem("loginType")
         }
+
       } else {
         setUser(null)
         setUserType(null)
         localStorage.removeItem("isLoggedIn")
         localStorage.removeItem("loginType")
       }
+    } catch (error) {
+      console.error("Auth state error:", error)
+    } finally {
       setLoading(false)
-    })
+    }
+  })
 
-    return unsubscribe
-  }, [])
+  return () => unsubscribe()
+}, [])
+
 
   const login = async (email, password, type = "user") => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
