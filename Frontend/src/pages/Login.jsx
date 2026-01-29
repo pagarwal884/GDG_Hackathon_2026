@@ -32,7 +32,7 @@ const Login = () => {
       if (loginType === "user") {
         navigate("/", { replace: true })
       } else {
-        navigate("/communities", { replace: true })
+        navigate("/admin", { replace: true })
       }
     } catch (error) {
       console.error("Login error:", error)

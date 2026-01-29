@@ -67,7 +67,7 @@ const SignupCommunity = () => {
       )
 
       toast.success("Community created successfully!")
-      navigate("/communities", { replace: true })
+      navigate("/admin", { replace: true })
     } catch (error) {
       console.error("Signup error:", error)
 

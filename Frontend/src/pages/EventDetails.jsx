@@ -80,7 +80,7 @@ const EventDetails = () => {
 
             {/* CTA */}
             <button
-              onClick={() => navigate("/booking")}
+              onClick={() => navigate(`/register/${id}`)}
               className="
                 w-full sm:w-auto
                 px-10 py-4

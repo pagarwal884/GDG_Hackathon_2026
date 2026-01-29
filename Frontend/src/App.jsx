@@ -17,25 +17,32 @@ import Signup from "./pages/Signup"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import SignupCommunity from "./pages/SignupCommunity"
+import RegistrationForm from "./components/RegistrationForm"
+import Admin from "./components/Admin"
 
 const App = () => {
   const location = useLocation()
 
   const isAdminRoute = location.pathname.startsWith("/admin")
   const isAuthPage =
-    location.pathname === "/login" || location.pathname === "/signin" || location.pathname ==="/signincommunity"
+    location.pathname === "/login" || 
+    location.pathname === "/signin" || 
+    location.pathname === "/signincommunity"
+  const isRegiForm = location.pathname.startsWith("/register")
 
   return (
     <AuthProvider>
       <Toaster position="top-center" />
 
       {/* NAVBAR */}
-      {!isAdminRoute && !isAuthPage && <Navbar />}
+      {!isAdminRoute && !isAuthPage && !isRegiForm && <Navbar />}
 
       <Routes>
+        <Route path="/admin" element={<Admin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<Signup />} />
         <Route path="/signincommunity" element={<SignupCommunity />} />
+        <Route path="/register/:id" element={<RegistrationForm />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Event />} />
@@ -57,7 +64,7 @@ const App = () => {
       </Routes>
 
       {/* FOOTER */}
-      {!isAdminRoute && !isAuthPage && <Footer />}
+      {!isAdminRoute && !isAuthPage && !isRegiForm && <Footer />}
     </AuthProvider>
   )
 }
